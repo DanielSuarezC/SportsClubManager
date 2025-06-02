@@ -1,0 +1,63 @@
+<block-ui>
+<section>
+    <div class="flex flex-col items-center justify-center px-6 py-6 mx-auto md:h-screen lg:py-0">
+      <a class="flex items-center">
+        <img class="w-60 h-30 py-6" src="../../../../../assets/logo_sports_club.png" alt="logo" />
+      </a>
+      <div class="w-full bg-sports-bluelight  rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 class="text-xl text-center font-bold leading-tight tracking-tight text-pallete-900 md:text-2xl dark:text-white">
+            Iniciar sesión
+          </h1>
+          <form [formGroup]="form1" (ngSubmit)="validar()" class="space-y-4 md:space-y-6">
+            <!-- Email -->
+            <div class="relative">
+              <label for="email" class="block mb-2 text-sm font-medium text-pallete-900 dark:text-white">Nombre de usuario</label>
+              <input
+                formControlName="username"
+                type="text"
+                id="username"
+                placeholder="username"
+                [ngClass]="{
+                  'border-red-500 focus:ring-red-500 focus:border-red-500': hasErrors('username','required') || hasErrors('username','minLength'),
+                  'border-gray-300 focus:ring-green-600 focus:border-green-600': !hasErrors('username','required') && !hasErrors('username','minLength')
+                }"
+                class="bg-gray-50 text-gray-900 block rounded-t-lg w-full p-2.5 dark:bg-gray-700 dark:text-white"
+              />
+              <div *ngIf="hasErrors('username','required') || hasErrors('username','minLength')" class="absolute left-0 text-red-500 text-sm mt-1">
+                <small>El nombre de usuario es obligatorio.</small>
+              </div>
+            </div>
+            <br>
+            <!-- Password -->
+            <div class="relative">
+              <label for="password" class="block mb-2 text-sm font-medium text-pallete-900 dark:text-white">Password</label>
+              <input
+                formControlName="password"
+                type="password"
+                id="password"
+                placeholder="••••••••"
+                [ngClass]="{
+                  'border-red-500 focus:ring-red-500 focus:border-red-500': hasErrors('password','required') || hasErrors('password','minlength'),
+                  
+                  'border-gray-300 focus:ring-green-600 focus:border-green-600': !hasErrors('password','required') && !hasErrors('password','minlength')
+                }"
+                class="bg-gray-50 text-gray-900 block rounded-t-lg w-full p-2.5 dark:bg-gray-700 dark:text-white"
+              />
+              <div *ngIf="hasErrors('password','required') || hasErrors('password','minlength')" class="absolute left-0 text-red-500 text-sm mt-1">
+                <small>La contraseña es obligatoria y debe tener al menos 8 caracteres.</small>
+              </div>
+            </div>
+            <br>
+            <!-- Submit -->
+           <app-btn [type]="'submit'" [color]="'bluedark'">Login</app-btn>
+          </form>
+        </div>
+      </div>
+    </div>
+    <br>
+
+  </section>
+</block-ui>
+ 
+  
