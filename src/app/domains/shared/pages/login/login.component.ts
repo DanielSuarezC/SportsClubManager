@@ -29,7 +29,7 @@ export class LoginComponent {
   private mensaje = inject(MensajeService);
   private route = inject(Router);
   public form1: FormGroup = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
+    username: ['', [Validators.required, Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.minLength(8)]]
   });
 

@@ -1,25 +1,10 @@
-<div class="flex flex-col min-h-screen bg-cover bg-center bg-no-repeat" style='background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("assets/background3.jpg");'>
-    <nav class="bg-sports-bluedark fixed top-0 left-0 w-full z-50">
-        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-4">
-                    <img class="h-10 w-auto" src="../../../../../assets/logo_sports_club.png" alt="Logo">
-                    <span class="hidden md:block text-white font-bold text-xl">Sports Club Manager</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <a [routerLink]="['/login']" class="text-sm text-white px-3 py-2 rounded hover:bg-blue-700">Iniciar sesión</a>
-                    <a class="text-sm text-white px-3 py-2 rounded hover:bg-blue-700">Crear cuenta</a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
     <main class="mt-20 mb-4 px-4 sm:px-6 lg:px-20 w-full">
         <div class="flex justify-center mb-6">
             <img src="assets/banner.gif" alt="Banner" class="w-full max-w-4xl rounded-md shadow-md">
         </div>
         <section>
-            <h2 class="text-white text-xl font-bold mb-4">Registered Clubs</h2>
+            <h2 class="text-white text-xl font-bold mb-4">Clubes registrados</h2>
             <div class="flex gap-4 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory">
                 <div class="min-w-[220px] snap-start bg-white bg-opacity-90 rounded-lg p-3 shadow-md">
                     <div class="w-full aspect-square bg-center bg-cover rounded-xl mb-2" style='background-image: url("...");'></div>
@@ -34,7 +19,7 @@
             </div>
         </section>
         <section class="mt-8">
-            <h2 class="text-white text-xl font-bold mb-4">Public Events</h2>
+            <h2 class="text-white text-xl font-bold mb-4">Eventos públicos</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <div class="bg-white bg-opacity-90 rounded-lg p-3 shadow-md">
                     <div class="w-full aspect-square bg-center bg-cover rounded-xl mb-2" style='background-image: url("...");'></div>
@@ -48,6 +33,4 @@
                 </div>
             </div>
         </section>
-    </main>
-    <app-footer/>
-</div>
+

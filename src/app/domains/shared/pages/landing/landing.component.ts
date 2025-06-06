@@ -11,18 +11,11 @@ import { OverlayModule } from '@angular/cdk/overlay';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
-export class LandingComponent implements AfterViewInit {
+export class LandingComponent{
 
 constructor() { }
 
 isOpenMenuMovil = false;
 clubs = [];
-
-ngAfterViewInit() {
-  const video: HTMLVideoElement | null = document.querySelector('#bannerVideo');
-  if (video) {
-    video.play();
-  }
-}
 
 }
