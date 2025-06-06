@@ -5,15 +5,27 @@ import { LayoutplayerComponent } from './domains/player/components/layoutplayer/
 import { ClubComponent } from './domains/admin/pages/club/club/club.component';
 import { EventsComponent } from './domains/player/pages/events/events/events.component';
 import { LandingComponent } from './domains/shared/pages/landing/landing.component';
+import { CreateAccountComponent } from './domains/shared/pages/create-account/create-account.component';
+import { LayoutComponent } from './domains/shared/components/layout/layout.component';
 
 export const routes: Routes = [
     {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
         path: '',
-        component: LandingComponent
+        component: LayoutComponent,
+        children: [
+            {
+                path:'home',
+                component: LandingComponent
+            },
+            {
+                path: 'login',
+                component: LoginComponent
+            },
+            {
+                path: 'create-account',
+                component: CreateAccountComponent,
+            },
+        ]
     },
     {
         path: 'admin',
