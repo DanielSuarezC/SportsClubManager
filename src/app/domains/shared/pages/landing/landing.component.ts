@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component } from '@angular/core';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, FooterComponent, RouterLink, OverlayModule],
+  imports: [CommonModule, OverlayModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
