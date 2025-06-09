@@ -7,6 +7,7 @@ import { EventsComponent } from './domains/player/pages/events/events/events.com
 import { LandingComponent } from './domains/shared/pages/landing/landing.component';
 import { CreateAccountComponent } from './domains/shared/pages/create-account/create-account.component';
 import { LayoutComponent } from './domains/shared/components/layout/layout.component';
+import { CreateClubComponent } from './domains/shared/pages/create-club/create-club.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,10 @@ export const routes: Routes = [
                 path: 'create-account',
                 component: CreateAccountComponent,
             },
+            {
+                path: 'create-club',
+                component: CreateClubComponent,
+            }
         ]
     },
     {

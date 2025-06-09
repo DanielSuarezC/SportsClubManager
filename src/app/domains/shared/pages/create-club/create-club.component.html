@@ -1,0 +1,96 @@
+<section class="mt-20 dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <h2 class="mb-4 text-xl text-center font-bold text-white dark:text-white">Crear club</h2>
+        <form [formGroup]="form1" (ngSubmit)="onSubmit()">
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div>
+                    <label for="nameClub" class="block mb-2 text-sm font-medium text-white dark:text-white">Nombre del
+                        club</label>
+                    <input type="text" formControlName="nameClub" id="nameClub"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Club Bobby Fisher">
+                </div>
+                <div>
+                    <label for="address" class="block mb-2 text-sm font-medium text-white dark:text-white">Dirección del
+                        domicilio</label>
+                    <input type="text" formControlName="address" id="address"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Dirección de domicilio del club">
+                </div>
+                <div>
+                    <label for="phoneNumberClub"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Teléfono de contacto</label>
+                    <input type="tel" formControlName="phoneNumberClub" id="phoneNumberClub"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ej: 3001234567" pattern="[0-9]{10}">
+                </div>
+            </div>
+                
+                <h2 class="my-6 text-xl text-center font-bold text-white dark:text-white">Datos del administrador</h2>
+            
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                  <div>
+                    <label for="nationalId" class="block mb-2 text-sm font-medium text-white dark:text-white">Documento
+                        de identidad</label>
+                    <input type="number" formControlName="nationalId" id="nationalId"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese su documento de identidad">
+                </div>
+                <div>
+                    <label for="nameAdmin"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Nombre</label>
+                    <input type="text" formControlName="nameAdmin" id="nameAdmin"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese su nombre">
+                </div>
+                <div>
+                    <label for="lastName"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Apellido</label>
+                    <input type="text" formControlName="lastName" id="lastName"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese su apellido">
+                </div>
+                <div>
+                    <label for="apellidos"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Apellidos</label>
+                    <input type="text" formControlName="apellidos" id="apellidos"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese apellidos">
+                </div>
+                <div>
+                    <label for="phoneNumberAdmin"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Teléfono</label>
+                    <input type="tel" formControlName="phoneNumberAdmin" id="phoneNumberAdmin"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese su teléfono">
+                </div>
+                <div>
+                    <label for="email" class="block mb-2 text-sm font-medium text-white dark:text-white">Email</label>
+                    <input type="email" formControlName="email" id="email"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese email">
+                </div>
+                <div>
+                    <label for="username" class="block mb-2 text-sm font-medium text-white dark:text-white">nombre de
+                        usuario</label>
+                    <input type="text" formControlName="username" id="username"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese un nombre de usuario">
+                </div>
+                <div>
+                    <label for="password"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Contraseña</label>
+                    <input type="password" formControlName="password" id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="**********">
+                </div>
+                <div class="flex justify-center space-x-4 sm:col-span-2">
+                    <button type="submit"
+                        class="inline-flex items-center px-7 py-3 text-sm font-medium text-center text-white bg-sports-bluedark rounded-lg focus:ring-4 focus:ring-sports-bluedark dark:focus:ring-sports-bluedark hover:bg-sports-blue">
+                        Crear Club
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

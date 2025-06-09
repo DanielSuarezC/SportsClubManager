@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BtnComponent } from '../../components/btn/btn.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -8,6 +8,7 @@ import { MensajeService } from '../../components/mensaje/mensaje.service';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../models/user/entities/User';
 import { Role } from '../../models/user/entities/Role';
+import { Club } from '../../models/club/entities/club';
 
 @Component({
   selector: 'app-create-account',
@@ -19,6 +20,7 @@ import { Role } from '../../models/user/entities/Role';
 export class CreateAccountComponent {
   @Input()
   public id: number;
+  public clubs = signal<Club[]>([]);
 
   private cookieService = inject(CookieService);
   public route = inject(Router);
@@ -40,6 +42,7 @@ export class CreateAccountComponent {
 
   ngOnInit() {
     this.token = this.cookieService.get(environment.nombreCookieToken);
+    this.getClubs();
   }
 
   onSubmit() {
@@ -52,7 +55,7 @@ export class CreateAccountComponent {
         this.createUser();
         break;
       default:
-        this.editarCliente();
+        this.editUser();
         break;
     }
   }
@@ -72,7 +75,7 @@ export class CreateAccountComponent {
   }
 
   /* Modificar Usuario */
-  private editarCliente() {
+  private editUser() {
     const userData: User = {
       nationalId:  +this.form1.value.nationalId!,
       name:  this.form1.value.name!,
@@ -83,5 +86,9 @@ export class CreateAccountComponent {
       password:  this.form1.value.password!,
       roles:  [new Role(this.form1.value.roles!) ],//La idea es más adelante modificar el correcto typing de datos
     };
+  }
+
+  private getClubs(){
+
   }
 }
