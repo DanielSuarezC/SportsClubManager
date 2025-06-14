@@ -1,89 +1,68 @@
-<nav class="fixed top-0 left-0 w-full bg-sports-bluedark dark:bg-gray-800 antialiased z-50">
+<nav class="fixed top-0 left-0 w-full bg-gradient-to-br from-sports-bluedark via-sports-blue to-sports-bluelightdark dark:bg-gray-800 antialiased z-50">
   <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-4">
     <div class="flex items-center justify-between">
 
       <div class="flex items-center space-x-8">
         <div class="flex items-center space-x-4">
-                    <img class="h-14 w-auto" src="../../../../../assets/logo_sports_club.png" alt="Logo">
-                    <span class="hidden md:block text-white font-bold text-xl">Sports Club Manager</span>
+                    <img class="h-14 w-auto" src="../../../../../assets/logo_sports_club_ white_letter.png" alt="Logo">
+                    <span class="lg:text-xl sm:text-xl md:block text-gray-900 font-bold text-xs">Sports Club Manager</span>
         </div>
-        <!-- menu items large screen -->
+        <!-- items del menú para pantallas grandes -->
         <ul class="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
           <ul class="space-y-2">
-            <!-- Gestión de Inventario -->
             <li>
-              <a routerLinkActive="underline" [routerLinkActiveOptions]="{ exact: true }"
-                (click)="openMenus('inventario')" cdkOverlayOrigin #inventarioOverlay="cdkOverlayOrigin"
-                class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500 cursor-pointer">
-                Administración
+              <a routerLink="/admin/club/admin" routerLinkActive="underline" (click)="isOpenAccount = false"
+                class="flex text-sm font-medium text-white hover:text-sports-bluedark dark:text-white dark:hover:text-primary-500 cursor-pointer">
+                Club
               </a>
             </li>
           </ul>
-
           <li class="shrink-0">
-            <a routerLink="/administrador/clients" routerLinkActive="underline" (click)="isOpeninventario = false"
-              class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
-              Gestion de Clientes
+            <a routerLink="/admin/events" routerLinkActive="underline" (click)="isOpenAccount = false"
+              class="flex text-sm font-medium text-white hover:text-sports-bluedark dark:text-white dark:hover:text-primary-500">
+              Eventos
+            </a>
+          </li>
+          <li class="shrink-0">
+            <a routerLink="/admin/members" routerLinkActive="underline" (click)="isOpenAccount = false"
+              class="flex text-sm font-medium text-white hover:text-sports-bluedark dark:text-white dark:hover:text-primary-500">
+              Miembros
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- overlay inventario  -->
-      <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="inventarioOverlay"
-        [cdkConnectedOverlayOpen]="isOpeninventario">
-        <div class=" bg-gray-50 dark:bg-gray-700 dark:border-gray-600 border border-gray-200 rounded-lg py-3 px-4 mt-4">
-          <ul class="text-gray-900 text-sm font-medium dark:text-white space-y-3">
-            <li>
-              <a routerLink="/administrador/inventarios" (click)="cerrarMenus()"
-                class="hover:text-primary-700 dark:hover:text-primary-500">Gestion de Inventarios</a>
-            </li>
-            <li>
-              <a routerLink="/administrador/productos" (click)="cerrarMenus()"
-                class="hover:text-primary-700 dark:hover:text-primary-500">Gestion de Productos</a>
-            </li>
-            <li>
-              <a routerLink="/administrador/insumos" (click)="cerrarMenus()"
-                class="hover:text-primary-700 dark:hover:text-primary-500">Gestion de Insumos
-              </a>
-            </li>
-            <li>
-              <a routerLink="/administrador/category" (click)="cerrarMenus()"
-                class="hover:text-primary-700 dark:hover:text-primary-500">Gestión de Categorías</a>
-            </li>
-          </ul>
-        </div>
-      </ng-template>
-      
-      <!-- Cart and user menu button -->
+      <!-- Botón desplegable de cuenta-->
       <div class="flex items-center lg:space-x-2">
-
-
-        <!-- User menu button  -->
         <button (click)="openMenus('account')" cdkOverlayOrigin #AccountOverlay="cdkOverlayOrigin"
           type="button"
-          class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
+          class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-sports-blue dark:hover:bg-gray-700 text-sm font-medium leading-none text-white dark:text-white">
           <svg class="w-5 h-5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-width="2"
               d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
           </svg>
           Cuenta
-          <svg class="w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          <svg class="w-4 h-4 text-white dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
             width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="m19 9-7 7-7-7" />
           </svg>
         </button>
-        <!-- user Overlay  -->
+        <!-- Overlay del botón cuenta -->
         <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="AccountOverlay"
           [cdkConnectedOverlayOpen]="isOpenAccount">
           <div
             class="z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700">
 
             <div class="p-2 text-sm font-medium text-gray-900 dark:text-white">
-              <a title="" routerLink="/"
-                class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer">
+              <a title="" 
+                class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-sports-blue dark:hover:bg-gray-600 cursor-pointer">
+                Perfil </a>
+            </div>
+            <div class="p-2 text-sm font-medium text-gray-900 dark:text-white">
+              <a title="" routerLink="/home"
+                class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-sports-blue dark:hover:bg-gray-600 cursor-pointer">
                 Cerrar Sesión </a>
             </div>
           </div>
@@ -97,7 +76,7 @@
           <span class="sr-only">
             Open Menu
           </span>
-          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+          <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
             viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
           </svg>
@@ -111,25 +90,16 @@
       <div class=" bg-gray-50 dark:bg-gray-700 dark:border-gray-600 border border-gray-200 rounded-lg py-3 px-4 mt-4">
         <ul class="text-gray-900 text-sm font-medium dark:text-white space-y-3">
           <li>
-            <a routerLink="/administrador/inventarios" (click)="cerrarMenus()"
-              class="hover:text-primary-700 dark:hover:text-primary-500">Gestion de Inventarios</a>
+            <a routerLink="/admin/club/admin" (click)="cerrarMenus()" 
+            class="hover:text-primary-700 dark:hover:text-primary-500">Club</a>
           </li>
           <li>
-            <a routerLink="/administrador/productos" (click)="cerrarMenus()" 
-              class="hover:text-primary-700 dark:hover:text-primary-500">Gestión de productos</a>
+            <a routerLink="/admin/events" (click)="cerrarMenus()" 
+              class="hover:text-primary-700 dark:hover:text-primary-500">Eventos</a>
           </li>
           <li>
-            <a routerLink="/administrador/insumos" (click)="cerrarMenus()" class="hover:text-primary-700 dark:hover:text-primary-500">Gestión de
-              insumos</a>
-          </li>
-          <li>
-            <a routerLink="/administrador/category" (click)="cerrarMenus()" class="hover:text-primary-700 dark:hover:text-primary-500">Gestión
-              de categorías</a>
-          </li>
-          <li>
-            <a routerLink="/administrador/clients" (click)="cerrarMenus()" class="hover:text-primary-700 dark:hover:text-primary-500">Gestion de
-              clientes
-            </a>
+            <a routerLink="/admin/members" (click)="cerrarMenus()"
+              class="hover:text-primary-700 dark:hover:text-primary-500">Miembros</a>
           </li>
         </ul>
       </div>
