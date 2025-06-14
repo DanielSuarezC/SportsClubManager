@@ -36,6 +36,7 @@ export class CreateAccountComponent {
     username: ['', Validators.required],
     password: ['', Validators.required],
     roles: ['', Validators.required],
+    club: ['', Validators.required],
   });
 
   token?: string;

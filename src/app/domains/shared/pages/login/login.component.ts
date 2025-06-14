@@ -60,7 +60,7 @@ export class LoginComponent {
     newUserLoginDto.password = this.form1.get('password')?.value;
     if(newUserLoginDto.username === 'admin' || newUserLoginDto.password === 'admin2025') {
       this.form1.reset();
-      this.route.navigate(['/admin/club']);
+      this.route.navigate(['/admin/club/admin']);
       this.mensaje.toastMessage(`Bienvenido administrador del club`, 'success', 'bottom-end', 4000);
       this.blockUI?.stop();
       return;
@@ -71,42 +71,9 @@ export class LoginComponent {
       this.blockUI?.stop();
       return;
     }
-    // this.authService.login(newUserLoginDto).subscribe(value => {
-    //   if (value != null) {
-    //     /* leyendo el token decodificado */
-    //     this.paylod = jwtDecode(value.access_token);
-
-    //     /* Asignación del token a las cookieService */
-    //     const fecha = new Date();
-    //     fecha.setMinutes(fecha.getMinutes() + environment.duracionMinutosCookieToken);
-    //     this.cookieService.set(environment.nombreCookieToken, value.access_token, fecha);
-    //     this.blockUI?.stop();
-
-    //     switch (this.paylod.rol) {
-    //       case 'ADMINISTRADOR':
-    //         this.form1.reset();
-    //         this.route.navigate(['/administrador/inventarios']);
-    //         this.mensaje.toastMessage(`Bienvenido ${this.paylod.rol}`, 'success', 'bottom-end', 4000);
-    //         break;
-    //         case 'VENDEDOR':
-    //           this.form1.reset();
-    //           this.route.navigate(['/vendedor/catalog']);
-    //           this.mensaje.toastMessage(`Bienvenido ${this.paylod.rol}`, 'success', 'bottom-end', 4000);
-    //         break;
-    //     }
-    //   } else {
-    //     this.mensaje.showMessage('Error de validación', `${value}`, 'error');
-    //   }
-    //   this.blockUI?.stop();
-    // }, error => {
-    //   this.blockUI?.stop();
-    //   this.mensaje.showMessage('Error de validacion', error.error.message, 'error');
-    //   console.log(error);
-    // });
   }
 
   hasErrors(controlName: string, errorType: string) {
     return this.form1.get(controlName)?.hasError(errorType) && this.form1.get(controlName)?.touched;
-    
   }
 }

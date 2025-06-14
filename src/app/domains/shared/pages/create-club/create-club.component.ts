@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -14,14 +14,17 @@ import { environment } from '../../../../../environments/environment';
   styleUrl: './create-club.component.css'
 })
 export class CreateClubComponent {
+  @Input()
+  public id: number = 0;
+
   private cookieService = inject(CookieService);
   public route = inject(Router);
   private mensaje = inject(MensajeService);
   private fb = inject(FormBuilder);
 
   public form1 = this.fb.group({
-    nameCLub: ['', Validators.required],
-    addres: ['', Validators.required],
+    nameClub: ['', Validators.required],
+    address: ['', Validators.required],
     phoneNumberClub: ['', Validators.required],
     nationalId: ['', Validators.required],
     nameAdmin: ['', Validators.required],
