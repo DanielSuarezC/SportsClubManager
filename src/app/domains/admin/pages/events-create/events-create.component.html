@@ -1,0 +1,97 @@
+<section class="mt-14 dark:bg-gray-900">
+    <div class="bg-gradient-to-bl from-sports-bluedark via-sports-blue to-sports-bluelight  rounded-lg shadow py-8 px-4 mx-auto mb-2 max-w-2xl lg:py-8">
+        <h2 class="mb-4 text-xl text-center font-bold text-white dark:text-white">{{eventType == 'tournament' ? "Crear torneo" : "Crear entrenamiento"}}</h2>
+        <form [formGroup]="form1" (ngSubmit)="onSubmit()">
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-white dark:text-white">{{eventType == 'tournament' ? "Nombre del torneo" : "Nombre del entrenamiento"}}</label>
+                    <input type="text" formControlName="name" id="name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Memorial Bobby Fisher">
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="description"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Descripción</label>
+                    <textarea id="description" rows="8" formControlName="description"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Breve descripción explicando el propósito del evento"></textarea>
+                    <div *ngIf="hasErrors('description','required')" class="text-red-500 text-sm mt-1">
+                        <small>La descripción es requerida</small>
+                    </div>
+                </div>
+                <div>
+                    <label for="location"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Ubicación</label>
+                    <input type="text" formControlName="location" id="location"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ubicación del evento">
+                </div>
+                <div>
+                    <label for="startDate" class="block mb-2 text-sm font-medium text-white dark:text-white">Fecha de
+                        inicio</label>
+                    <div class="relative max-w-sm">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                            </svg>
+                        </div>
+                        <input  type="date" formControlName="startDate"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Fecha de inicio del evento" id="startDate">
+                            </div>
+                            <div *ngIf="hasErrors('startDate','required')" class=" font-bold text-red-600 text-sm mt-1">
+                                <small>La fecha de inicio es requerida</small>
+                            </div>
+                </div>
+
+                <div>
+                    <label for="endDate" class="block mb-2 text-sm font-medium text-white dark:text-white">Fecha de
+                        fin</label>
+                    <div class="relative max-w-sm">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                            </svg>
+                        </div>
+                        <input formControlName="endDate" type="date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Fecha de fin del evento" id="endDate">
+                            </div>
+                            <div *ngIf="hasErrors('endDate','required')" class="font-bold text-red-500 text-sm mt-1">
+                                <small>La fecha de fin es requerida</small>
+                            </div>
+                </div>
+                <div>
+                    <label for="eventVisibility" class="block mb-2 text-sm font-medium text-white dark:text-white">Visibilidad</label>
+                    <select id="eventVisibility" formControlName="eventVisibility"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="PUBLIC">Público</option>
+                        <option value="PRIVATE">Privado</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="maximumParticipants"
+                        class="block mb-2 text-sm font-medium text-white dark:text-white">Máximo número de participantes</label>
+                    <input type="number" formControlName="maximumParticipants" id="maximumParticipants"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Ingrese el número máximo de participantes">
+                </div>
+             
+                <div class="flex justify-center space-x-4 sm:col-span-2">
+                    <button type="submit"
+                        class="inline-flex items-center px-7 py-3 text-sm font-medium text-center text-white bg-sports-bluedark rounded-lg focus:ring-4 focus:ring-sports-bluedark dark:focus:ring-sports-bluedark hover:bg-sports-blue">
+                        {{eventType == 'tournament' ? "Guardar torneo" : "Guardar entrenamiento"}}
+                    </button>
+                    <a  routerLink="/admin/events"
+                        class="inline-flex items-center px-7 py-3 text-sm font-medium text-center text-white bg-sports-bluedark rounded-lg focus:ring-4 focus:ring-sports-bluedark dark:focus:ring-sports-bluedark hover:bg-sports-blue cursor-pointer">
+                        volver
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
