@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  urlServices: 'https://api.tiaras.top/tiaras/api/v1/',
-  nombreCookieToken: 'tiaras_colombia',
+  urlServices: '',
+  nombreCookieToken: 'sportsclubmanager_token',
   duracionMinutosCookieToken: 1440,
-  urlAplicacion: 'https://tiaras.pages.dev'
+  urlAplicacion: 'https://sports.pages.dev'
 };
