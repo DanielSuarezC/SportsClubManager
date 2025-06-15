@@ -30,7 +30,7 @@ export class LoginComponent {
   private route = inject(Router);
   public form1: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(5)]],
-    password: ['', [Validators.required, Validators.minLength(8)]]
+    password: ['', [Validators.required, Validators.minLength(5)]]
   });
 
   baseUrl = environment.urlAplicacion;
@@ -40,7 +40,7 @@ export class LoginComponent {
   constructor() { }
 
   ngOnInit(): void {
-    // let token = this.cookieService.get(environment.nombreCookieToken);
+    let token = this.cookieService.get(environment.nombreCookieToken);
     // this.cookieService.delete(environment.nombreCookieToken);
     this.form1.get('username')?.setValue('');
     this.form1.get('password')?.setValue('');
@@ -58,19 +58,12 @@ export class LoginComponent {
     const newUserLoginDto = new UsuarioLoginDto();
     newUserLoginDto.username = this.form1.get('username')?.value;
     newUserLoginDto.password = this.form1.get('password')?.value;
-    if(newUserLoginDto.username === 'admin' || newUserLoginDto.password === 'admin2025') {
-      this.form1.reset();
-      this.route.navigate(['/admin/club/admin']);
-      this.mensaje.toastMessage(`Bienvenido administrador del club`, 'success', 'bottom-end', 4000);
+
+    this.authService.login(newUserLoginDto).subscribe( value => {
+      console.log(value);
       this.blockUI?.stop();
-      return;
-    }else if(newUserLoginDto.username === 'player' || newUserLoginDto.password === 'player2025'){
-      this.form1.reset();
-      this.route.navigate(['/player/events']);
-      this.mensaje.toastMessage(`Bienvenido jugador`, 'success', 'bottom-end', 4000);
-      this.blockUI?.stop();
-      return;
-    }
+    })
+    this.blockUI?.stop();
   }
 
   hasErrors(controlName: string, errorType: string) {
