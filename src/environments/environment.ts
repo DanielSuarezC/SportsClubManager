@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  urlServices: 'http://localhost:3000/athena/api/v1/',
+  urlServices: 'http://ec2-18-212-24-228.compute-1.amazonaws.com/',
   nombreCookieToken: 'sportsclubmanager_token',
   duracionMinutosCookieToken: 60,
   urlAplicacion: 'http://localhost:4200/'

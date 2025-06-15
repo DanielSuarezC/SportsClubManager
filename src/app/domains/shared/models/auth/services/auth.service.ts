@@ -10,7 +10,7 @@ import { tokenjwt } from '../tokenjwt';
 })
 export class AuthService {
 
-  baseUrl = environment.urlServices + 'auth/login';
+  baseUrl = environment.urlServices + 'login';
   http = inject(HttpClient);
   constructor() { 
   }
