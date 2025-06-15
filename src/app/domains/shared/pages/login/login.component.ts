@@ -14,6 +14,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { UsuarioAuth } from '../../models/auth/entities/UsuarioAuth';
 import { AuthService } from '../../models/auth/services/auth.service';
 import { UsuarioLoginDto } from '../../models/auth/dto/UsuarioLoginDto';
+import { Authority, paylod } from '../../models/paylod';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +35,7 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(5)]]
   });
 
+  paylod?: paylod;
   baseUrl = environment.urlAplicacion;
 
   @BlockUI() blockUI?: NgBlockUI;
@@ -41,7 +44,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     let token = this.cookieService.get(environment.nombreCookieToken);
-    // this.cookieService.delete(environment.nombreCookieToken);
+    this.cookieService.delete(environment.nombreCookieToken);
     this.form1.get('username')?.setValue('');
     this.form1.get('password')?.setValue('');
   }
@@ -60,10 +63,45 @@ export class LoginComponent {
     newUserLoginDto.password = this.form1.get('password')?.value;
 
     this.authService.login(newUserLoginDto).subscribe( value => {
-      console.log(value);
+      if (value != null) {
+        /* leyendo el token decodificado */
+        this.paylod = jwtDecode(value.access_token);
+        const authorities: Authority[] = JSON.parse(this.paylod.authorities);
+        /* Asignación del token a las cookieService */
+        const fecha = new Date();
+        fecha.setMinutes(fecha.getMinutes() + environment.duracionMinutosCookieToken);
+        this.cookieService.set(environment.nombreCookieToken, value.access_token, fecha);
+        this.blockUI?.stop();
+        console.log('paylod',this.paylod);
+        for (const authority of authorities) {
+            if( authority.authority === 'ROLE_ADMIN') {
+              this.form1.reset();
+              this.route.navigate(['/admin/club/admin']);
+              this.mensaje.toastMessage(`Bienvenido administrador del club`, 'success', 'bottom-end', 4000);
+              return;
+            }
+            else if( authority.authority === 'ROLE_PLAYER') {
+              this.form1.reset();
+              this.route.navigate(['/player/events']);
+              this.mensaje.toastMessage(`Bienvenido administrador del club`, 'success', 'bottom-end', 4000);
+              return;
+            }
+        }
+
+      } else {
+        this.mensaje.showMessage('Error de validación', `${value}`, 'error');
+      }
       this.blockUI?.stop();
+    }, error => {
+      this.blockUI?.stop();
+      this.mensaje.showMessage('Error de validacion', error.error.message, 'error');
+      console.log(error);
     })
     this.blockUI?.stop();
+  }
+
+  public getUser(){
+
   }
 
   hasErrors(controlName: string, errorType: string) {

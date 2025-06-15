@@ -1,7 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ImagesService, UnsplashImage } from '../../../shared/models/club/service/images.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../../../../environments/environment';
+import { UserService } from '../../models/user/services/user.service';
+import { paylod } from '../../models/paylod';
+import { jwtDecode } from 'jwt-decode';
+import { ClubAdministrator } from '../../models/member/entities/ClubAdministrator';
 
 @Component({
   selector: 'app-home-club',
@@ -14,30 +20,40 @@ export class HomeClubComponent {
   @Input() public typeUser: string = '';
     public id: number = 0;
   
-    currentImage: UnsplashImage | null = null;
-    imageGallery: UnsplashImage[] = [];
-    loading = false;
-    error: string | null = null;
+    private cookieService = inject(CookieService);
+    private sportsImageService = inject(ImagesService);
+    private userService = inject(UserService);
+
+    private token: string;
+    public clubAdministratorId: number;
+    public currentImage: UnsplashImage | null = null;
+    public paylod: paylod;
   
-    constructor(private sportsImageService: ImagesService) { }
+    constructor() { }
   
     ngOnInit() {
       this.loadRandomImage();
+      this.token = this.cookieService.get(environment.nombreCookieToken);
+      this.paylod = jwtDecode(this.token);
+      this.getClubAministrator();
     }
   
     loadRandomImage() {
-      this.loading = true;
-      this.error = null;
-  
       this.sportsImageService.getRandomSportsImage().subscribe({
         next: (image) => {
           this.currentImage = image;
-          this.loading = false;
         },
         error: (err) => {
-          this.error = 'Error al cargar la imagen. Verifica tu API key.';
-          this.loading = false;
           console.error('Error:', err);
+        }
+      });
+    }
+
+    getClubAministrator(){
+      let username = this.paylod.username;
+      this.userService.getByUsername(username, this.token ).subscribe({
+        next: (data) => {
+          console.log('Club Administrator:', data);
         }
       });
     }
