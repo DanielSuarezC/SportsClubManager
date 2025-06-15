@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   urlServices: '',
-  nombreCookieToken: 'sportsclubmanager_token',
+  nombreCookieToken: 'http://ec2-18-212-24-228.compute-1.amazonaws.com',
   duracionMinutosCookieToken: 1440,
-  urlAplicacion: 'https://sports.pages.dev'
+  urlAplicacion: 'https://sportsclubmanager.pages.dev/'
 };
