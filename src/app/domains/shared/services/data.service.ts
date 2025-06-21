@@ -43,7 +43,7 @@ export interface UserWithRoles extends User {
 })
 export class DataService {
 
-  private apiUrl = environment.urlServices + 'api/';
+  private apiUrl = environment.urlServices ;
 
   constructor(private http: HttpClient) { }
 
