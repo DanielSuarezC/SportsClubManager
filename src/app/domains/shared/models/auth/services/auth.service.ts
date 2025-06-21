@@ -19,10 +19,10 @@ export class AuthService {
     return this.http.post<tokenjwt>(this.baseUrl, usuarioLoginDto);
   }
 
-  // public login(usuarioLoginDto: UsuarioLoginDto, token: string): Observable<any>{
-  //   const headers = new HttpHeaders({
-  //     Authorization: `Bearer ${token}`,
-  //   });
-  //   return this.http.post(this.baseUrl, usuarioLoginDto, { headers });
-  // }
+  /* async login(usuarioLoginDto: UsuarioLoginDto): Promise<Observable<tokenjwt>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<tokenjwt>(this.baseUrl, usuarioLoginDto, { headers });
+  } */
 }

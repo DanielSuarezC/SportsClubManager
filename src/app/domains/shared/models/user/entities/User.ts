@@ -3,15 +3,15 @@ import { Role } from "./Role";
 
 export class User{
      id?: number;
-     nationalId: number;
-     name: string;
-     lastName: string;
-     phoneNumber: number;
-     email: string;
-     username: string;
-     password: string;
+     nationalId?: number;
+     name?: string;
+     lastName?: string;
+     phoneNumber?: number;
+     email?: string;
+     username?: string;
+     password?: string;
      enabled?: boolean;
      admin?: boolean;
-     roles: Role[];
+     roles?: Role[];
      affiliationStatus?: AffiliationStatus;
 }
