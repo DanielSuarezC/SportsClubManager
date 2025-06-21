@@ -83,7 +83,7 @@ export class LoginComponent {
 
     this.dataService.login(this.form1.get('username')?.value, CryptoJS.MD5(this.form1.get('password')?.value)).subscribe({
       next: (data: User) => {
-        this.dataService.getUsersWithRoles(data.name).subscribe({
+        this.dataService.getUsersWithRoles(data.username).subscribe({
           next: (response) => {
             let roles = response;
             for (let rol of roles) {
