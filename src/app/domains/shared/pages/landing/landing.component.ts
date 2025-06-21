@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-landing',
@@ -9,11 +10,29 @@ import { OverlayModule } from '@angular/cdk/overlay';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
-export class LandingComponent{
+export class LandingComponent implements OnInit {
+
+private dataService = inject(DataService);  
 
 constructor() { }
 
+ngOnInit() {
+  this.getClubes();
+}
+
+public clubs: any[] = [];
+
 isOpenMenuMovil = false;
-clubs = [];
+
+getClubes(){
+  this.dataService.getData('clubs').subscribe({
+    next: (data) => {
+      this.clubs = data;
+    },
+    error: (error) => {
+      console.error('Error fetching clubs:', error);
+    }
+  });
+}
 
 }

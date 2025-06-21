@@ -9,7 +9,7 @@
           <h1 class="text-xl text-center font-bold leading-tight tracking-tight text-pallete-900 md:text-2xl dark:text-white">
             Iniciar sesión
           </h1>
-          <form [formGroup]="form1" (ngSubmit)="validar()" class="space-y-4 md:space-y-6">
+          <form [formGroup]="form1" (ngSubmit)="login()" class="space-y-4 md:space-y-6">
             <div class="relative">
               <label for="username" class="block mb-2 text-sm font-medium text-pallete-900 dark:text-white">Nombre de usuario</label>
               <input

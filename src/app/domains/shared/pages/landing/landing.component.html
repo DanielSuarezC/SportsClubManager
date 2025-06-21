@@ -1,26 +1,22 @@
 <main class="mt-20 mb-4 px-4 sm:px-6 lg:px-20 w-full">
     <div class="flex justify-center mb-6">
-        <!-- <img src="assets/banner.gif" alt="Banner" class="w-full max-w-4xl rounded-md shadow-md"> -->
         <iframe title="vimeo-player" src="https://player.vimeo.com/video/1093424643?h=08adbf053e&autoplay=1&muted=1&controls=0&loop=1&background=1"
-            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+            frameborder="0" 
             class="w-full max-w-4xl rounded-md shadow-md aspect-video">
         </iframe>
     </div>
     <section>
         <h2 class="text-white text-xl font-bold mb-4">Clubes registrados</h2>
         <div class="flex gap-4 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory">
-            <div class="min-w-[220px] snap-start bg-white bg-opacity-90 rounded-lg p-3 shadow-md">
-                <div class="w-full aspect-square bg-center bg-cover rounded-xl mb-2"
-                    style='background-image: url("...");'></div>
-                <p class="text-gray-900 font-medium">City Soccer Club</p>
-                <p class="text-gray-600 text-sm">150 members</p>
+            <div *ngFor="let club of clubs" class="min-w-[220px] snap-start bg-white bg-opacity-90 rounded-lg p-3 shadow-md">
+                <div  class="w-full aspect-square bg-center bg-cover rounded-xl mb-2"
+                    style='background-image: url("...");'>
+                </div>
+                <p class="text-gray-900 font-medium">{{club.name}}</p>
+                <p class="text-gray-600 text-sm">{{club.address}}</p>
+                <p class="text-gray-600 text-sm">{{club.phone_number}}</p>
             </div>
-            <div class="min-w-[220px] snap-start bg-white bg-opacity-90 rounded-lg p-3 shadow-md">
-                <div class="w-full aspect-square bg-center bg-cover rounded-xl mb-2"
-                    style='background-image: url("...");'></div>
-                <p class="text-gray-900 font-medium">Metro Basketball Association</p>
-                <p class="text-gray-600 text-sm">200 members</p>
-            </div>
+            
         </div>
     </section>
     <section class="mt-8">

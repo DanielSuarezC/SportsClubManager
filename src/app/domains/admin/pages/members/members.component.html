@@ -8,8 +8,8 @@
                     <form class="flex items-center">
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="relative w-full">
-                            <app-input [placeholder]="'Buscar por cédula del cliente...'"
-                                (onDebounce)="searchPedidos($event)"></app-input>
+                            <app-input [placeholder]="'Buscar miembro por nombre...'"
+                                (onDebounce)="searchUsers($event)"></app-input>
                         </div>
                     </form>
                 </div>
@@ -29,11 +29,11 @@
                             <th scope="col" class="px-4 py-3">Estado</th>
                         </tr>
                     </thead>
-                  <!--   <tbody>
-                        <tr *ngFor="let pedido of pagination.data" class="border-b dark:border-gray-700">
+                    <tbody>
+                        <tr *ngFor="let member of data" class="border-b dark:border-gray-700">
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <button #dropdownButton [id]=" + '-button'"
-                                    [attr.data-dropdown-toggle]=" + '-dropdown'" type="button"
+                                <button #dropdownButton [id]="member.id + '-button'"
+                                    [attr.data-dropdown-toggle]="member.id + '-dropdown'" type="button"
                                     class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -43,115 +43,33 @@
                                 </button>
                             </td>
                             <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ pedido.idPedido }}
+                                {{ member.name | titlecase }} 
                             </td>
-                            <td class="px-4 py-3">{{pedido.cliente?.nombre | titlecase}} {{pedido.cliente.apellidos |
-                                titlecase}}</td>
-                            <td class="px-4 py-3">{{ pedido.cliente.cedula}}</td>
-                            <td class="px-4 py-3">{{ pedido.evento}}</td>
-                            <td class="px-4 py-3">{{ pedido.fechaPedido | date:'longDate' }}</td>
-                            <td class="px-4 py-3">{{ pedido.fechaEntrega | date:'longDate' }}</td>
-                            <td class="px-4 py-3">{{ pedido.valorTotal }}</td>
-                            <td class="px-4 py-3">{{ pedido.valorPagado }}</td>
+                            <td class="px-4 py-3">{{ member.lastName| titlecase }} </td>
+                            <td class="px-4 py-3">{{ member.email}}</td>
+                            <td class="px-4 py-3">{{ member.phoneNumber}}</td>
                             <td class="px-4 py-3">
-                                @if(pedido.estadoPago === 'Pendiente'){
-                                <dd
-                                    class="me-2 mt-1.5 inline-flex items-center rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900  dark:text-primary-300">
-                                    <svg class="me-1 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M18.5 4h-13m13 16h-13M8 20v-3.333a2 2 0 0 1 .4-1.2L10 12.6a1 1 0 0 0 0-1.2L8.4 8.533a2 2 0 0 1-.4-1.2V4h8v3.333a2 2 0 0 1-.4 1.2L13.957 11.4a1 1 0 0 0 0 1.2l1.643 2.867a2 2 0 0 1 .4 1.2V20H8Z" />
-                                    </svg>
-                                    Pendiente
-                                </dd>
-                                }@else if(pedido.estadoPago === '50% Pagado'){
-                                <dd
-                                    class="me-2 mt-1.5 inline-flex items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900  dark:text-yellow-300">
-                                    <svg class="me-1 h-4 w-4 text-gray-800 dark:text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M8.891 15.107 15.11 8.89m-5.183-.52h.01m3.089 7.254h.01M14.08 3.902a2.849 2.849 0 0 0 2.176.902 2.845 2.845 0 0 1 2.94 2.94 2.849 2.849 0 0 0 .901 2.176 2.847 2.847 0 0 1 0 4.16 2.848 2.848 0 0 0-.901 2.175 2.843 2.843 0 0 1-2.94 2.94 2.848 2.848 0 0 0-2.176.902 2.847 2.847 0 0 1-4.16 0 2.85 2.85 0 0 0-2.176-.902 2.845 2.845 0 0 1-2.94-2.94 2.848 2.848 0 0 0-.901-2.176 2.848 2.848 0 0 1 0-4.16 2.849 2.849 0 0 0 .901-2.176 2.845 2.845 0 0 1 2.941-2.94 2.849 2.849 0 0 0 2.176-.901 2.847 2.847 0 0 1 4.159 0Z" />
-                                    </svg>
-                                    50% Pagado
-                                </dd>
-                                }@else{
-                                <dd
-                                    class="me-2 mt-1.5 inline-flex items-center rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900  dark:text-green-300">
-                                    <svg class="me-1 h-4 w-4 text-gray-800 dark:text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                            d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                                    </svg>
-                                    100% Pagado
-                                </dd>
-                                }
+                                <ng-container *ngFor="let role of member.roles; let last = last">
+                                    {{ role.name }}<span *ngIf="!last">, </span>
+                                </ng-container>
                             </td>
-                            <td class="px-4 py-3">
-                                @if(pedido.estadoPedido === 'Pendiente'){
-                                <dd
-                                    class="me-2 mt-1.5 inline-flex items-center rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900  dark:text-primary-300">
-                                    <svg class="me-1 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M18.5 4h-13m13 16h-13M8 20v-3.333a2 2 0 0 1 .4-1.2L10 12.6a1 1 0 0 0 0-1.2L8.4 8.533a2 2 0 0 1-.4-1.2V4h8v3.333a2 2 0 0 1-.4 1.2L13.957 11.4a1 1 0 0 0 0 1.2l1.643 2.867a2 2 0 0 1 .4 1.2V20H8Z" />
-                                    </svg>
-                                    Pendiente
-                                </dd>
-                                }@else if(pedido.estadoPedido === 'En Proceso'){
-                                <dd
-                                    class="me-2 mt-1.5 inline-flex items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900  dark:text-yellow-300">
-                                    <svg class="me-1 h-4 w-4 text-yellow-800 dark:text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                            d="m20.9532 11.7634-2.0523-2.05225-2.0523 2.05225 2.0523 2.0523 2.0523-2.0523Zm-1.3681-2.73651-4.1046-4.10457L12.06 8.3428l4.1046 4.1046 3.4205-3.42051Zm-4.1047 2.73651-2.7363-2.73638-8.20919 8.20918 2.73639 2.7364 8.2091-8.2092Z" />
-                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                            d="m12.9306 3.74083 1.8658 1.86571-2.0523 2.05229-1.5548-1.55476c-.995-.99505-3.23389-.49753-3.91799.18657l2.73639-2.73639c.6841-.68409 1.9901-.74628 2.9229.18658Z" />
-                                    </svg>
+                            <td class="px-4 py-3">{{ member.affiliationStatus }}</td>
 
-                                    En Proceso
-                                </dd>
-                                }@else if(pedido.estadoPedido === 'Terminado'){
-                                <dd
-                                    class="me-2 mt-1.5 inline-flex items-center rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900  dark:text-green-300">
-                                    <svg class="me-1 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
-                                    </svg>
-                                    Terminado
-                                </dd>
-                                }@else{
-                                <dd
-                                    class="me-2 mt-1.5 inline-flex items-center rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-green-900  dark:text-green-300">
-                                    <svg class="me-1 w-4 h-4 text-red-700 dark:text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
-                                    </svg>
-                                    Incidencia
-                                </dd>
-                                }
-                            </td>
-
-                            <div #dropdownMenu [id]="pedido.idPedido + '-dropdownn'"
+                            <div #dropdownMenu [id]="member.id + '-dropdownn'"
                                 class="hidden  z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                 <div class="py-1">
-                                    <a [routerLink]="['/vendedor/detail-order', pedido.idPedido]"
+                                    <a id="buttonStatusModal" data-modal-target="statusModal" data-modal-toggle="statusModal" type="button"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
-                                        ver detalle de pedido
+                                        Control de estado afiliación
+                                    </a>
+                                    <a id="buttonAssignmentModal" data-modal-target="assignmentModal" data-modal-toggle="assignmentModal"
+                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
+                                        Asignación de roles
                                     </a>
                                 </div>
                             </div>
                         </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
             </div>
 
@@ -160,3 +78,112 @@
         </div>
     </div>
 </section>
+<!-- Funcionalidad de modal para el control de estado de afiliación-->
+ <div id="statusModal" tabindex="-1" aria-hidden="true"
+    class="hidden  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <div class=" relative p-4 w-full max-w-md max-h-full">
+        <form [formGroup]="form1" (ngSubmit)="OnSubmit1()" method="get" id="statusModal" tabindex="-1" aria-hidden="true"
+            class=" top-0 z-50 h-modal w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full">
+            <div class="relative h-full w-full max-w-xl md:h-auto">
+                <!-- Modal content -->
+                <div class="relative bg-gradient-to-br from-sports-bluedark to-sports-bluelight rounded-lg dark:bg-gray-800">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between rounded-t p-4 md:p-5">
+                        <h3 class="text-lg font-normal text-white dark:text-gray-400">Control de estado</h3>
+                        <button type="button" (click)="closeModal()"
+                            class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-white hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="filterModal">
+                            <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-4 md:px-5">
+                        <div id="myTabContent">
+                            <div class="grid grid-cols-2 gap-4 md:grid-cols-2" id="brand" role="tabpanel"
+                                aria-labelledby="brand-tab">
+
+                                <div class="space-y-2">
+                                    <label for="affiliationStatus"
+                                        class="block mb-2 text-sm font-medium text-white dark:text-white">Evento</label>
+                                    <select id="affiliationStatus" formControlName="affiliationStatus"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        <option value="ACTIVE">Activo</option>
+                                        <option value="INACTIVE">Inactivo</option>
+                                        <option value="SUSPENDED">Suspendido</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center space-x-4 rounded-b p-4 dark:border-gray-600 md:p-5">
+                        <button type="submit"
+                            class="rounded-lg bg-sports-bluedark px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800">Guardar cambios</button>
+                        <button type="reset" (click)="resetFilter()"
+                            class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Funcionalidad de modal para la asignación de roles-->
+ <div id="assignmentModal" tabindex="-1" aria-hidden="true"
+    class="hidden  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <div class=" relative p-4 w-full max-w-md max-h-full">
+        <form [formGroup]="form2" (ngSubmit)="OnSubmit2()" method="get" id="assignmentModal" tabindex="-1" aria-hidden="true"
+            class=" top-0 z-50 h-modal w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0 md:h-full">
+            <div class="relative h-full w-full max-w-xl md:h-auto">
+                <!-- Modal content -->
+                <div class="relative bg-gradient-to-br from-sports-bluedark to-sports-bluelight rounded-lg dark:bg-gray-800">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between rounded-t p-4 md:p-5">
+                        <h3 class="text-lg font-normal text-white dark:text-gray-400">Asignación de roles</h3>
+                        <button type="button" (click)="closeModal()"
+                            class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-white hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="filterModal">
+                            <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-4 md:px-5">
+                        <div id="myTabContent">
+                            <div class="grid grid-cols-2 gap-4 md:grid-cols-2" id="brand" role="tabpanel"
+                                aria-labelledby="brand-tab">
+
+                                <div class="space-y-2">
+                                    <label for="roles"
+                                        class="block mb-2 text-sm font-medium text-white dark:text-white">Roles</label>
+                                    <select id="roles" formControlName="roles"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        <option value="1">Administrador general</option>
+                                        <option value="2">Administrador del club</option>
+                                        <option value="4">Jugador</option>
+                                        <option value="3">Entrenador</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center space-x-4 rounded-b p-4 dark:border-gray-600 md:p-5">
+                        <button type="submit"
+                            class="rounded-lg bg-sports-bluedark px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800">Guardar cambios</button>
+                        <button type="reset" (click)="resetFilter()"
+                            class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

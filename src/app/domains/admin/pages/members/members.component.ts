@@ -1,31 +1,41 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MensajeService } from '../../../shared/components/mensaje/mensaje.service';
 import { CookieService } from 'ngx-cookie-service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Dropdown, InstanceOptions, Modal, ModalOptions } from 'flowbite';
 import { DefaultPaginationValue, Pagination } from '../../../shared/models/paginated.interface';
 import { User } from '../../../shared/models/user/entities/User';
 import { SearchArray } from '../../../shared/models/searchArray.interface';
 import { environment } from '../../../../../environments/environment';
 import { InputComponent } from '../../../shared/components/input/input.component';
+import { DataService } from '../../../shared/services/data.service';
+import { AffiliationStatus } from '../../../shared/models/user/entities/AffiliationStatus';
 
 @Component({
   selector: 'app-members',
   standalone: true,
-  imports: [CommonModule, OverlayModule, InputComponent],
+  imports: [CommonModule, OverlayModule, InputComponent,ReactiveFormsModule],
   templateUrl: './members.component.html',
   styleUrl: './members.component.css'
 })
-export class MembersComponent {
+export class MembersComponent implements OnInit, AfterViewInit {
   mensaje = inject(MensajeService);
   cookieService = inject(CookieService);
   private fb = inject(FormBuilder);
-
+  private dataService = inject(DataService);
   public modal: Modal;
-
+  data: User[] = [];
   token: string | undefined;
+
+
+  public form1: FormGroup = this.fb.group({
+    affiliationStatus: [''],
+  });
+  public form2: FormGroup = this.fb.group({
+    roles: [''],
+  });
 
   public pagination: Pagination<User> = DefaultPaginationValue;
   public page: number = 1;
@@ -46,7 +56,19 @@ export class MembersComponent {
 
   ngOnInit() {
     this.token = this.cookieService.get(environment.nombreCookieToken);
-    this.getPedidos();
+    this.loadData();
+  }
+
+  loadData() {
+    this.dataService.getUsersWithRoles('').subscribe({
+      next: (response) => {
+        this.data = response;
+        setTimeout(() => this.inicializarDropdowns()); 
+      },
+      error: (error) => {
+        console.error('Error al cargar datos:', error);
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -57,16 +79,14 @@ export class MembersComponent {
     };
 
     const instanceOptions: InstanceOptions = {
-      id: 'filterModal',
+      id: 'statusModal',
       override: true
     };
 
-    const buttonModal: HTMLElement = document.getElementById('buttonModal');
-    const filterModal: HTMLElement = document.getElementById('filterModal');
+    const buttonModal: HTMLElement = document.getElementById('buttonStatusModal');
+    const filterModal: HTMLElement = document.getElementById('statusModal');
     this.modal = new Modal(filterModal, modalOptions, instanceOptions);
-    buttonModal.addEventListener('click', () => this.modal.show());
-
-    console.log(this.dropdowns);
+    // buttonModal.addEventListener('click', () => this.modal.show());
   }
 
   /* Inicializar Dropdowns */
@@ -84,7 +104,10 @@ export class MembersComponent {
     }
   }
 
-  OnSubmit() {
+  OnSubmit1() {
+   
+  }
+  OnSubmit2() {
    
   }
 
@@ -93,9 +116,17 @@ export class MembersComponent {
   }
 
   /* Buscar Pedidos */
-  searchPedidos(search: any): void {
+  searchUsers(search: any): void {
+    this.dataService.getUsersWithRoles(search).subscribe({
+      next: (response) => {
+        this.data = response;
+        this.pagination.meta.totalItems = response.length;
+        this.pagination.meta.totalPages = Math.ceil(response.length / this.pagination.meta.itemsPerPage);
+        this.pagination.meta.currentPage = 1; // Reset to first page
+      }
+    });
     this.terminos = [];
-    if(search) this.terminos.push({ term: 'cliente', search: search });
+    if(search) this.terminos.push(search);
     this.getPedidos();
   }
 

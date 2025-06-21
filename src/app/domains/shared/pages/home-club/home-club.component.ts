@@ -8,6 +8,7 @@ import { UserService } from '../../models/user/services/user.service';
 import { paylod } from '../../models/paylod';
 import { jwtDecode } from 'jwt-decode';
 import { ClubAdministrator } from '../../models/member/entities/ClubAdministrator';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-home-club',
@@ -23,6 +24,7 @@ export class HomeClubComponent {
     private cookieService = inject(CookieService);
     private sportsImageService = inject(ImagesService);
     private userService = inject(UserService);
+    private dataService = inject(DataService);
 
     private token: string;
     public clubAdministratorId: number;
@@ -33,8 +35,6 @@ export class HomeClubComponent {
   
     ngOnInit() {
       this.loadRandomImage();
-      this.token = this.cookieService.get(environment.nombreCookieToken);
-      this.paylod = jwtDecode(this.token);
       this.getClubAministrator();
     }
   
@@ -51,6 +51,7 @@ export class HomeClubComponent {
 
     getClubAministrator(){
       let username = this.paylod.username;
+      
       this.userService.getByUsername(username, this.token ).subscribe({
         next: (data) => {
           console.log('Club Administrator:', data);

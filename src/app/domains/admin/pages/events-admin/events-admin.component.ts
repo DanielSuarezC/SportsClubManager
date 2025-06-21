@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
 import { MensajeService } from '../../../shared/components/mensaje/mensaje.service';
 import { CookieService } from 'ngx-cookie-service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Dropdown, InstanceOptions, Modal, ModalOptions } from 'flowbite';
 import { DefaultPaginationValue, Pagination } from '../../../shared/models/paginated.interface';
 import { User } from '../../../shared/models/user/entities/User';
@@ -11,22 +11,31 @@ import { SearchArray } from '../../../shared/models/searchArray.interface';
 import { environment } from '../../../../../environments/environment';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { RouterLink } from '@angular/router';
+import { DataService } from '../../../shared/services/data.service';
+import { EventVisibility } from '../../../shared/models/event/entities/EventVisibility';
 
 @Component({
   selector: 'app-events-admin',
   standalone: true,
-  imports: [CommonModule, OverlayModule, InputComponent, RouterLink],
+  imports: [CommonModule, OverlayModule, InputComponent,ReactiveFormsModule, RouterLink],
   templateUrl: './events-admin.component.html',
   styleUrl: './events-admin.component.css'
 })
 export class EventsAdminComponent {
-  mensaje = inject(MensajeService);
-  cookieService = inject(CookieService);
+  private mensaje = inject(MensajeService);
+  private cookieService = inject(CookieService);
   private fb = inject(FormBuilder);
+  private dataService = inject(DataService);
+  data: any[] = [];
 
   public modal: Modal;
 
+  public form1: FormGroup = this.fb.group({
+      eventVisibility: [''],
+    });
+
   token: string | undefined;
+  public EventId: number;
 
   public pagination: Pagination<User> = DefaultPaginationValue;
   public page: number = 1;
@@ -47,7 +56,7 @@ export class EventsAdminComponent {
 
   ngOnInit() {
     this.token = this.cookieService.get(environment.nombreCookieToken);
-    this.getEvents();
+    this.loadData();
   }
 
   ngAfterViewInit(): void {
@@ -58,13 +67,42 @@ export class EventsAdminComponent {
     };
 
     const instanceOptions: InstanceOptions = {
-      id: 'filterModal',
+      id: 'visibilityModal',
       override: true
     };
 
     const buttonModal: HTMLElement = document.getElementById('buttonModal');
-    const filterModal: HTMLElement = document.getElementById('filterModal');
+    const filterModal: HTMLElement = document.getElementById('visibilityModal');
     this.modal = new Modal(filterModal, modalOptions, instanceOptions);
+  }
+
+  loadData() {
+    this.dataService.getData('events').subscribe({
+      next: (response) => {
+        this.data = response;
+        setTimeout(() => this.inicializarDropdowns()); 
+      },
+      error: (error) => {
+        console.error('Error al cargar datos:', error);
+      }
+    });
+  }
+
+  // Ejemplo de crear un nuevo elemento
+  createUser(userData: any) {
+    this.dataService.create('users', userData).subscribe({
+      next: (response) => {
+        console.log('Usuario creado:', response);
+        this.loadData(); // Recargar datos
+      },
+      error: (error) => {
+        console.error('Error al crear usuario:', error);
+      }
+    });
+  }
+
+  setEventId(eventId: number) {
+    this.EventId = eventId;
   }
 
   /* Inicializar Dropdowns */
@@ -83,23 +121,27 @@ export class EventsAdminComponent {
   }
 
   OnSubmit() {
-
-  }
-
-  private getEvents() {
-
+    this.dataService.updateVisibility(this.EventId, this.form1.value.eventVisibility).subscribe({
+      next: (response) => {
+        console.log('Visibilidad actualizada:', response);
+        this.mensaje.toastMessage('Visibilidad actualiza','success','bottom-end',3000);
+        this.loadData(); // Recargar datos
+        this.closeModal(); // Cerrar modal
+      },
+      error: (error) => {
+        console.error('Error al actualizar visibilidad:', error);
+      }
+    });
   }
 
   /* Buscar Eventos */
   searchEvents(search: any): void {
     this.terminos = [];
     if (search) this.terminos.push({ term: 'cliente', search: search });
-    this.getEvents();
   }
 
   resetFilter() {
     this.terminos = [];
-    this.getEvents();
   }
 
   /* Páginas */
@@ -110,12 +152,6 @@ export class EventsAdminComponent {
     }
 
     return numbers;
-  }
-
-  /* Cambiar Página */
-  public cambiarPagina(page: number): void {
-    this.page = page;
-    this.getEvents();
   }
 
   /* Cerrar modal de filtros */
