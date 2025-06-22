@@ -14,7 +14,7 @@ import { Club } from '../../models/club/entities/club';
 @Component({
   selector: 'app-home-club',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './home-club.component.html',
   styleUrl: './home-club.component.css'
 })

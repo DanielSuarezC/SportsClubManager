@@ -12,27 +12,23 @@
                 <div  class="w-full aspect-square bg-center bg-cover rounded-xl mb-2"
                     style='background-image: url("...");'>
                 </div>
-                <p class="text-gray-900 font-medium">{{club.name}}</p>
-                <p class="text-gray-600 text-sm">{{club.address}}</p>
-                <p class="text-gray-600 text-sm">{{club.phone_number}}</p>
+                <p class="text-gray-900 font-medium">{{club?.name}}</p>
+                <p class="text-gray-600 text-sm">{{club?.address}}</p>
+                <p class="text-gray-600 text-sm">{{club?.phone_number}}</p>
             </div>
             
         </div>
     </section>
     <section class="mt-8">
         <h2 class="text-white text-xl font-bold mb-4">Eventos públicos</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div *ngFor="let event of events" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div class="bg-white bg-opacity-90 rounded-lg p-3 shadow-md">
                 <div class="w-full aspect-square bg-center bg-cover rounded-xl mb-2"
                     style='background-image: url("...");'></div>
-                <p class="text-gray-900 font-medium">Summer Soccer Tournament</p>
-                <p class="text-gray-600 text-sm">Join us for the annual summer soccer tournament.</p>
-            </div>
-            <div class="bg-white bg-opacity-90 rounded-lg p-3 shadow-md">
-                <div class="w-full aspect-square bg-center bg-cover rounded-xl mb-2"
-                    style='background-image: url("...");'></div>
-                <p class="text-gray-900 font-medium">Basketball League Finals</p>
-                <p class="text-gray-600 text-sm">Witness the thrilling finals of the basketball league.</p>
+                <p class="text-gray-900 font-medium">{{event?.name}}</p>
+                <p class="text-gray-600 text-sm">{{event?.description}}</p>
+                <p class="text-gray-600 text-sm">{{event?.location}}</p>
+                <p class="text-gray-600 text-sm">{{event?.starDate | date:'longDate'}}p>
             </div>
         </div>
     </section>

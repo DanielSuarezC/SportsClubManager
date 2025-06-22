@@ -17,20 +17,32 @@ private dataService = inject(DataService);
 constructor() { }
 
 ngOnInit() {
-  this.getClubes();
+  this.getClubs();
 }
 
 public clubs: any[] = [];
+public events: any[] = [];
 
 isOpenMenuMovil = false;
 
-getClubes(){
+getClubs(){
   this.dataService.getData('clubs').subscribe({
     next: (data) => {
       this.clubs = data;
     },
     error: (error) => {
       console.error('Error fetching clubs:', error);
+    }
+  });
+}
+
+getEvents(){
+  this.dataService.getData('events').subscribe({
+    next: (data) => {
+      this.events = data;
+    },
+    error: (error) => {
+      console.error('Error fetching events:', error);
     }
   });
 }
