@@ -10,6 +10,10 @@
         <!-- items del menú para pantallas grandes -->
         <ul class="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
           <ul class="space-y-2">
+            <a routerLink="/admin/club" routerLinkActive="underline" (click)="isOpenAccount = false"
+              class="flex text-sm font-medium text-white hover:text-sports-bluedark dark:text-white dark:hover:text-primary-500">
+              Club
+            </a>
           </ul>
           <li class="shrink-0">
             <a routerLink="/admin/events" routerLinkActive="underline" (click)="isOpenAccount = false"

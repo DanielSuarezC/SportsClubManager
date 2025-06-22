@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { forkJoin, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { Club } from '../models/club/entities/club';
 
 
 export interface User {
@@ -42,10 +43,10 @@ export interface UserWithRoles extends User {
   providedIn: 'root'
 })
 export class DataService {
+  private http = inject(HttpClient);
+  private apiUrl = environment.urlServices;
 
-  private apiUrl = environment.urlServices ;
-
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   
   getData(endpoint: string): Observable<any[]> {
@@ -152,6 +153,10 @@ export class DataService {
     return this.http.get<User[]>(`${this.apiUrl}/users?username=${username}&password=${password}`).pipe(
       map(users => users.length > 0 ? users[0] : null)
     );
+  }
+
+  getClubAdministratorById(club_administrador_id: number): Observable<Club> {
+    return this.http.get<Club>(`${this.apiUrl}/clubs?club_administrator_id=${club_administrador_id}`);
   }
 
 
