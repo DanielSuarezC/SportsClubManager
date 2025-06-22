@@ -30,7 +30,7 @@ export const routes: Routes = [
                 component: CreateAccountComponent,
             },
             {
-                path: 'create-club',
+                path: 'create-club/:id',
                 component: CreateClubComponent,
             }
         ]
@@ -42,7 +42,7 @@ export const routes: Routes = [
         canActivateChild: [],
         children: [
             {
-                path: 'club/:typeUser',
+                path: 'club/:UserId',
                 component: HomeClubComponent
             },
             {

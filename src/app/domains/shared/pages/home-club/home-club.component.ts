@@ -9,6 +9,7 @@ import { paylod } from '../../models/paylod';
 import { jwtDecode } from 'jwt-decode';
 import { ClubAdministrator } from '../../models/member/entities/ClubAdministrator';
 import { DataService } from '../../services/data.service';
+import { Club } from '../../models/club/entities/club';
 
 @Component({
   selector: 'app-home-club',
@@ -18,8 +19,8 @@ import { DataService } from '../../services/data.service';
   styleUrl: './home-club.component.css'
 })
 export class HomeClubComponent {
-  @Input() public typeUser: string = '';
-    public id: number = 0;
+    @Input() public UserId: number;
+    
   
     private cookieService = inject(CookieService);
     private sportsImageService = inject(ImagesService);
@@ -27,7 +28,7 @@ export class HomeClubComponent {
     private dataService = inject(DataService);
 
     private token: string;
-    public clubAdministratorId: number;
+    public club: Club;
     public currentImage: UnsplashImage | null = null;
     public paylod: paylod;
   
@@ -50,11 +51,9 @@ export class HomeClubComponent {
     }
 
     getClubAministrator(){
-      let username = this.paylod.username;
-      
-      this.userService.getByUsername(username, this.token ).subscribe({
-        next: (data) => {
-          console.log('Club Administrator:', data);
+      this.dataService.getClubAdministratorById(this.UserId).subscribe({
+        next: (data: Club) => {
+          this.club = data[0];
         }
       });
     }
